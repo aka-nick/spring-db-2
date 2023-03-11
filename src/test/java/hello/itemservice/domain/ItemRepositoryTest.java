@@ -5,11 +5,15 @@ import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,12 +23,23 @@ class ItemRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
 
+    // 롤백을 위한 트랜잭션 매니저
+    @Autowired
+    PlatformTransactionManager txManager;
+    TransactionStatus status;
+
+    @BeforeEach
+    void beforeEach() {
+        status = txManager.getTransaction(new DefaultTransactionDefinition()); // 매 테스트 마다 롤백되도록 트랜잭션 사용
+    }
+
     @AfterEach
     void afterEach() {
         //MemoryItemRepository 의 경우 제한적으로 사용
         if (itemRepository instanceof MemoryItemRepository) {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
+        txManager.rollback(status); // 테스트가 종료될 때마다 롤백
     }
 
     @Test
