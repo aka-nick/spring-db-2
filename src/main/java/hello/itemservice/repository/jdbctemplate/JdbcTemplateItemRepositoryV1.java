@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -64,6 +65,9 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
         }
         catch (EmptyResultDataAccessException e) {
             return Optional.empty();
+        }
+        catch (IncorrectResultSizeDataAccessException e) {
+            return Optional.empty(); //조회 데이터가 하나여야 하는데 두 개 이상일 때
         }
     }
     @Override
