@@ -1,22 +1,17 @@
 package hello.itemservice.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import hello.itemservice.repository.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional // @Transactional을 이용한 테스트
 @SpringBootTest
@@ -25,25 +20,21 @@ class ItemRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
 
-//    // 롤백을 위한 트랜잭션 매니저
-//    @Autowired
-//    PlatformTransactionManager txManager;
-//    TransactionStatus status;
-
-//    @BeforeEach
-//    void beforeEach() {
-//        status = txManager.getTransaction(new DefaultTransactionDefinition()); // 매 테스트 마다 롤백되도록 트랜잭션 사용
-//    }
-
     @AfterEach
     void afterEach() {
         //MemoryItemRepository 의 경우 제한적으로 사용
         if (itemRepository instanceof MemoryItemRepository) {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
-//        txManager.rollback(status); // 테스트가 종료될 때마다 롤백
     }
 
+    /*
+    테스트 하면서 강제로 커밋하고 싶은 경우는 아래와 같이 @Transactional과 @Commit 또는 @Rollback(false)의 어노테이션을 붙이면 된다.
+    */
+//    @Transactional
+//    @Commit
+//    //또는
+//    @Rollback(false)
     @Test
     void save() {
         //given
