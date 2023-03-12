@@ -37,7 +37,7 @@ public class ItemServiceApplication {
 		log.info("메모리 데이터베이스 초기화");
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.h2.Driver");
-		dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1");
+		dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1"); //DB_CLOSE_DELAY=-1; : 메모리 DB에서는 커넥션을 모두 잃으면 데이터베이스를 초기화하는데, 이를 방지하는 설정
 		dataSource.setUsername("sa");
 		dataSource.setPassword("");
 		return dataSource;
