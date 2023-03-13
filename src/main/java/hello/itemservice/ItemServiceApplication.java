@@ -1,19 +1,17 @@
 package hello.itemservice;
 
-import hello.itemservice.config.JdbcTemplateV3Config;
+import hello.itemservice.config.JpaConfig;
 import hello.itemservice.repository.ItemRepository;
-import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cglib.transform.impl.AddStaticInitTransformer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 
-@Import(JdbcTemplateV3Config.class)
+@Import(JpaConfig.class)
+//@Import(MybatisConfig.class)
 //@Import(JdbcTemplateV2Config.class)
 //@Import(JdbcTemplateV1Config.class)
 //@Import(MemoryConfig.class)
