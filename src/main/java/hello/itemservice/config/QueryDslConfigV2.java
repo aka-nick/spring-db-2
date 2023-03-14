@@ -17,7 +17,6 @@ public class QueryDslConfigV2 {
 
     private final EntityManager em;
     private final ItemRepositoryV2 repository;
-    private final ItemService itemService;
 
     @Bean
     public ItemService itemService() {
