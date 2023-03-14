@@ -1,7 +1,6 @@
 package hello.itemservice.repository.jpa;
 
 import hello.itemservice.domain.Item;
-import hello.itemservice.repository.ItemRepository;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

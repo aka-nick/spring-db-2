@@ -1,12 +1,11 @@
 package hello.itemservice.repository.jpa;
 
-import static hello.itemservice.domain.QItem.*;
+import static hello.itemservice.domain.QItem.item;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hello.itemservice.domain.Item;
-import hello.itemservice.domain.QItem;
 import hello.itemservice.repository.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
