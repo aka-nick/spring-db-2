@@ -1,6 +1,7 @@
 package hello.itemservice;
 
 import hello.itemservice.config.JpaConfig;
+import hello.itemservice.config.QueryDslConfig;
 import hello.itemservice.config.SpringDataJpaConfig;
 import hello.itemservice.repository.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 
 
-@Import(SpringDataJpaConfig.class)
+@Import(QueryDslConfig.class)
+//@Import(SpringDataJpaConfig.class)
 //@Import(JpaConfig.class)
 //@Import(MybatisConfig.class)
 //@Import(JdbcTemplateV2Config.class)
