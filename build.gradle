@@ -49,10 +49,10 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
-// queryDSL 추가: 자동 생성된 Q클래스 gradle clean으로 제거
-clean {
-	delete file('src/main/generated')
-}
+// queryDSL 추가: 자동 생성된 Q클래스 gradle clean으로 제거 (Q파일은 git으로 관리되지 않는게 좋다)
+//clean {
+//	delete file('src/main/generated') // 인텔리제이 빌드 시 Q클래스 생성되는 위치
+//}
 
 tasks.named('test') {
 	useJUnitPlatform()
