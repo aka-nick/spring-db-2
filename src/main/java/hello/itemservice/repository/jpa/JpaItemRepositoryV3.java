@@ -54,7 +54,7 @@ public class JpaItemRepositoryV3 implements ItemRepository {
 
         BooleanBuilder builder = new BooleanBuilder();
         if (StringUtils.hasText(itemName)) {
-            builder.and(QItem.item.itemName.like(itemName));
+            builder.and(QItem.item.itemName.like("%" + itemName + "%"));
         }
         if (maxPrice != null) {
             builder.and(QItem.item.price.loe(maxPrice));
