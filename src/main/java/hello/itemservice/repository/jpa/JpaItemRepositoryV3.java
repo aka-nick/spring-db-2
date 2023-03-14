@@ -1,6 +1,9 @@
 package hello.itemservice.repository.jpa;
 
+import static hello.itemservice.domain.QItem.*;
+
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hello.itemservice.domain.Item;
 import hello.itemservice.domain.QItem;
@@ -46,26 +49,51 @@ public class JpaItemRepositoryV3 implements ItemRepository {
         return Optional.ofNullable(item);
     }
 
-    @Override
-    public List<Item> findAll(ItemSearchCond cond) {
+//    @Override
+    public List<Item> findAllOld(ItemSearchCond cond) {
 
         String itemName = cond.getItemName();
         Integer maxPrice = cond.getMaxPrice();
 
         BooleanBuilder builder = new BooleanBuilder();
         if (StringUtils.hasText(itemName)) {
-            builder.and(QItem.item.itemName.like("%" + itemName + "%"));
+            builder.and(item.itemName.like("%" + itemName + "%"));
         }
         if (maxPrice != null) {
-            builder.and(QItem.item.price.loe(maxPrice));
+            builder.and(item.price.loe(maxPrice));
         }
 
 //        QItem item = new QItem("i"); // "i"는 alias가 된다. 기본값은 "item"으로 들어가있게 된다
-        List<Item> result = query.select(QItem.item) // static import하면 더 깔끔해진다
-                .from(QItem.item)
+        List<Item> result = query.select(item) // static import하면 더 깔끔해진다
+                .from(item)
                 .where(builder)
                 .fetch();
 
         return result;
     }
+
+    @Override
+    public List<Item> findAll(ItemSearchCond cond) {
+        String itemName = cond.getItemName();
+        Integer maxPrice = cond.getMaxPrice();
+
+        return query.select(item)
+                .from(item)
+                .where(likeItemName(itemName), priceLessOrEqualThan(maxPrice))
+                .fetch();
+    }
+    private BooleanExpression likeItemName(String itemName) {
+        if (StringUtils.hasText(itemName)) {
+            return item.itemName.like("%" + itemName + "%");
+        }
+        return null;
+    }
+    private BooleanExpression priceLessOrEqualThan(Integer maxPrice) {
+        if (maxPrice != null) {
+            return item.price.loe(maxPrice);
+        }
+        return null;
+    }
+
+
 }
